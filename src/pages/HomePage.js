@@ -5,6 +5,7 @@ import ModalCreateUser from "../components/ModalCreateUser";
 
 function HomePage() {
   const [users, setUsers] = useState([]);
+  const [reload, setReload] = useState(false)
 
   useEffect(() => {
     async function fetchUsers() {
@@ -13,7 +14,7 @@ function HomePage() {
     }
 
     fetchUsers();
-  }, []);
+  }, [reload]);
 
   console.log(users);
   return (
@@ -51,7 +52,7 @@ function HomePage() {
           </tbody>
         </Table>
 
-        <ModalCreateUser />
+        <ModalCreateUser reload={reload} setReload={setReload} />
       </Container>
     </div>
   );
