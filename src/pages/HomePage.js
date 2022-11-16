@@ -2,10 +2,11 @@ import { Table, Container, Button } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ModalCreateUser from "../components/ModalCreateUser";
+import { Link } from "react-router-dom";
 
 function HomePage() {
   const [users, setUsers] = useState([]);
-  const [reload, setReload] = useState(false)
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     async function fetchUsers() {
@@ -44,7 +45,9 @@ function HomePage() {
                   <td>{user.status}</td>
                   <td>{user.departamento}</td>
                   <td>
-                    <Button variant="outline-secondary">Detalhes</Button>
+                    <Link to={`/user/${user._id}`}>
+                      <Button variant="outline-secondary">Detalhes</Button>
+                    </Link>
                   </td>
                 </tr>
               );

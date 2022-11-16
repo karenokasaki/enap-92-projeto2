@@ -1,9 +1,9 @@
-import { Button, Modal, Row, Col } from "react-bootstrap";
+import { Button, Modal, Row, Col, Form } from "react-bootstrap";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-function ModalCreateUser({reload, setReload}) {
+function ModalCreateUser({ reload, setReload }) {
   const [show, setShow] = useState(false);
   const [form, setForm] = useState({
     nome: "",
@@ -49,8 +49,8 @@ function ModalCreateUser({reload, setReload}) {
         foto: "",
         cargo: "",
       });
-      toast.success("Funcionário criado com sucesso! :D")
-      setReload(!reload)
+      toast.success("Funcionário criado com sucesso! :D");
+      setReload(!reload);
     } catch (error) {
       console.log(error);
       toast.error("Algo deu errado. Tente novamente.");
@@ -69,110 +69,129 @@ function ModalCreateUser({reload, setReload}) {
         </Modal.Header>
         <Modal.Body>
           {/* FORMULÁRIO */}
-          <form>
+          <Form>
             <Row>
               <Col>
-                <label>Nome do Funcionário</label>
-                <input
-                  type="text"
-                  placeholder="Insira o nome completo do funcionário"
-                  name="nome"
-                  value={form.nome}
-                  onChange={handleChange}
-                />
+                <Form.Group className="mb-3">
+                  <Form.Label>Nome do Funcionário</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Insira o nome completo do funcionário"
+                    name="nome"
+                    value={form.nome}
+                    onChange={handleChange}
+                    autoFocus
+                  />
+                </Form.Group>
               </Col>
               <Col>
-                <label>Cargo</label>
-                <input
-                  type="text"
-                  placeholder="Insira nome do cargo do funcionário"
-                  name="cargo"
-                  value={form.cargo}
-                  onChange={handleChange}
-                />
+                <Form.Group>
+                  <Form.Label>Cargo</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Insira nome do cargo do funcionário"
+                    name="cargo"
+                    value={form.cargo}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
               </Col>
             </Row>
             <Row>
               <Col>
-                <label>Numero de Telefone</label>
-                <input
-                  type="text"
-                  placeholder="Insira o telefone do funcionário"
-                  name="tel"
-                  value={form.tel}
-                  onChange={handleChange}
-                />
+                <Form.Group>
+                  <Form.Label>Numero de Telefone</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Insira o telefone do funcionário"
+                    name="tel"
+                    value={form.tel}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
               </Col>
               <Col>
-                <label>Email</label>
-                <input
-                  type="email"
-                  placeholder="Insira o email do funcionário"
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                />
+                <Form.Group>
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Insira o email do funcionário"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
               </Col>
             </Row>
             <Row>
               <Col>
-                <label>Salário</label>
-                <input
-                  type="number"
-                  placeholder="Insira o valor do salário R$"
-                  name="salario"
-                  value={form.salario}
-                  onChange={handleChange}
-                />
+                <Form.Group>
+                  <Form.Label>Salário</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Insira o valor do salário R$"
+                    name="salario"
+                    value={form.salario}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
               </Col>
               <Col>
-                <label>Departamento</label>
-                <select name="departamento" onChange={handleChange}>
-                  <option>Selecione uma opção</option>
-                  <option value="Front-End">Front-End</option>
-                  <option value="Back-End">Back-End</option>
-                  <option value="Mobile">Mobile</option>
-                  <option value="Financeiro">Financeiro</option>
-                  <option value="Marketing">Marketing</option>
-                  <option value="People">People</option>
-                  <option value="Full-Stack">Full-Stack</option>
-                </select>
+                <Form.Group>
+                  <Form.Label>Departamento</Form.Label>
+                  <Form.Select name="departamento" onChange={handleChange}>
+                    <option>Selecione uma opção</option>
+                    <option value="Front-End">Front-End</option>
+                    <option value="Back-End">Back-End</option>
+                    <option value="Mobile">Mobile</option>
+                    <option value="Financeiro">Financeiro</option>
+                    <option value="Marketing">Marketing</option>
+                    <option value="People">People</option>
+                    <option value="Full-Stack">Full-Stack</option>
+                  </Form.Select>
+                </Form.Group>
               </Col>
             </Row>
             <Row>
               <Col>
-                <label>Status</label>
-                <select name="status" onChange={handleChange}>
-                  <option>Selecione uma opção</option>
-                  <option value="Disponível">Disponível</option>
-                  <option value="Alocado">Alocado</option>
-                  <option value="De Férias">De Férias</option>
-                  <option value="De Licença">De Licença</option>
-                </select>
+                <Form.Group>
+                  <Form.Label>Status</Form.Label>
+                  <Form.Select name="status" onChange={handleChange}>
+                    <option>Selecione uma opção</option>
+                    <option value="Disponível">Disponível</option>
+                    <option value="Alocado">Alocado</option>
+                    <option value="De Férias">De Férias</option>
+                    <option value="De Licença">De Licença</option>
+                  </Form.Select>
+                </Form.Group>
               </Col>
               <Col>
-                <label>Data de Admissão</label>
-                <input
-                  type="date"
-                  name="dataAdmissao"
-                  value={form.dataAdmissao}
-                  onChange={handleChange}
-                />
+                <Form.Group>
+                  <Form.Label>Data de Admissão</Form.Label>
+                  <Form.Control
+                    type="date"
+                    name="dataAdmissao"
+                    value={form.dataAdmissao}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
               </Col>
             </Row>
             <Row>
               <Col>
-                <label>Adicione sua foto</label>
-                <input
-                  type="text"
-                  placeholder="Insira a url da sua foto de perfil"
-                  name="foto"
-                  value={form.foto}
-                  onChange={handleChange}
-                />
+                <Form.Group>
+                  <Form.Label>Adicione sua foto</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Insira a url da sua foto de perfil"
+                    name="foto"
+                    value={form.foto}
+                    onChange={handleChange}
+                  />
+                </Form.Group>
               </Col>
             </Row>
-          </form>
+          </Form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
