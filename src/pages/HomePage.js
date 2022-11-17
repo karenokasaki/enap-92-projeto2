@@ -46,7 +46,9 @@ function HomePage() {
                   <td>{user.departamento}</td>
                   <td>
                     <Link to={`/user/${user._id}`}>
-                      <Button variant="outline-secondary">Detalhes</Button>
+                      <Button variant="outline-secondary" size="sm">
+                        Detalhes
+                      </Button>
                     </Link>
                   </td>
                 </tr>

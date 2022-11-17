@@ -85,7 +85,7 @@ function ModalCreateUser({ reload, setReload }) {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group>
+                <Form.Group className="mb-3">
                   <Form.Label>Cargo</Form.Label>
                   <Form.Control
                     type="text"
@@ -99,7 +99,7 @@ function ModalCreateUser({ reload, setReload }) {
             </Row>
             <Row>
               <Col>
-                <Form.Group>
+                <Form.Group className="mb-3">
                   <Form.Label>Numero de Telefone</Form.Label>
                   <Form.Control
                     type="text"
@@ -111,7 +111,7 @@ function ModalCreateUser({ reload, setReload }) {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group>
+                <Form.Group className="mb-3">
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     type="email"
@@ -125,7 +125,7 @@ function ModalCreateUser({ reload, setReload }) {
             </Row>
             <Row>
               <Col>
-                <Form.Group>
+                <Form.Group className="mb-3">
                   <Form.Label>Salário</Form.Label>
                   <Form.Control
                     type="number"
@@ -137,7 +137,7 @@ function ModalCreateUser({ reload, setReload }) {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group>
+                <Form.Group className="mb-3">
                   <Form.Label>Departamento</Form.Label>
                   <Form.Select name="departamento" onChange={handleChange}>
                     <option>Selecione uma opção</option>
@@ -154,7 +154,7 @@ function ModalCreateUser({ reload, setReload }) {
             </Row>
             <Row>
               <Col>
-                <Form.Group>
+                <Form.Group className="mb-3">
                   <Form.Label>Status</Form.Label>
                   <Form.Select name="status" onChange={handleChange}>
                     <option>Selecione uma opção</option>
@@ -166,7 +166,7 @@ function ModalCreateUser({ reload, setReload }) {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group>
+                <Form.Group className="mb-3">
                   <Form.Label>Data de Admissão</Form.Label>
                   <Form.Control
                     type="date"
