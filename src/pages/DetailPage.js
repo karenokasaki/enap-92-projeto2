@@ -10,6 +10,9 @@ import {
   Col,
   Form,
   Spinner,
+  Badge,
+  Offcanvas,
+  ListGroup,
 } from "react-bootstrap";
 
 function DetailPage() {
@@ -39,6 +42,8 @@ function DetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [reload, setReload] = useState(false);
 
+  const [showTasks, setShowTasks] = useState(false);
+
   useEffect(() => {
     async function fetchUser() {
       try {
@@ -67,7 +72,6 @@ function DetailPage() {
 
   async function handleDelete(e) {
     try {
-
       await axios.delete(`https://ironrest.herokuapp.com/enap92/${userID}`);
       //agora que o usuário está deletado
       //redirecionaremos ele para a homePage
@@ -82,7 +86,7 @@ function DetailPage() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-        //clonando o form para que possamos fazer as alterações necessárias
+      //clonando o form para que possamos fazer as alterações necessárias
       const clone = { ...form };
       delete clone._id;
 
@@ -124,7 +128,32 @@ function DetailPage() {
     }
   }
 
-  console.log(user);
+  async function handleTaskCompletada(e) {
+    e.preventDefault();
+
+    if (!form.task) {
+      // se form.task for uma string vazia ela é false -> então eu nego -> true
+      toast.error("Por favor, adicione uma task primeiro");
+      return;
+    }
+
+    try {
+      const clone = { ...user };
+      delete clone._id;
+
+      clone.tasksFinalizadas.push(clone.task);
+      clone.task = "";
+      clone.progresso = "0";
+
+      await axios.put(`https://ironrest.herokuapp.com/enap92/${userID}`, clone);
+      setReload(!reload);
+    } catch (error) {
+      console.log(error);
+      toast.error("Algo deu errado. Tente novamente.");
+    }
+  }
+
+  console.log(form);
 
   return (
     <Container className="my-4">
@@ -341,8 +370,8 @@ function DetailPage() {
             </Card>
           )}
 
-          <Row>
-            <Col className="col-3 mt-3">
+          <Row className="mt-3">
+            <Col className="col-3">
               <Card bg="light">
                 <Card.Header>
                   <Card.Title>Stack</Card.Title>
@@ -364,7 +393,87 @@ function DetailPage() {
                 </Card.Body>
               </Card>
             </Col>
+            <Col>
+              <Card bg="light">
+                <Card.Header>
+                  <Card.Title>Task</Card.Title>
+                </Card.Header>
+                <Card.Body>
+                  <Form.Group className="mb-3">
+                    <Form.Control
+                      type="text"
+                      placeholder="Insira a task que você está trabalhando"
+                      name="task"
+                      value={form.task}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Range
+                      min="0"
+                      max="100"
+                      value={form.progresso}
+                      name="progresso"
+                      onChange={handleChange}
+                    />
+                    {form.progresso}
+                  </Form.Group>
+                  <Row>
+                    <Col>
+                      <Button
+                        onClick={handleSubmit}
+                        variant="outline-secondary"
+                      >
+                        Atualizar
+                      </Button>
+                    </Col>
+                    <Col>
+                      <Button
+                        variant="outline-success"
+                        onClick={handleTaskCompletada}
+                      >
+                        Concluir Task
+                      </Button>
+                    </Col>
+                    <Col>
+                      <Button
+                        variant="outline-dark"
+                        onClick={() => setShowTasks(true)}
+                      >
+                        Tasks Finalizadas{" "}
+                        <Badge bg="secondary">
+                          {user.tasksFinalizadas.length}
+                        </Badge>
+                      </Button>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            </Col>
           </Row>
+
+          <Offcanvas
+            show={showTasks}
+            onHide={() => setShowTasks(false)}
+            placement="end"
+          >
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>Tasks Finalizadas</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <ListGroup>
+                {user.tasksFinalizadas
+                  .map((task) => {
+                    return (
+                      <ListGroup.Item>
+                        <Button variant="danger">x</Button> {task}
+                      </ListGroup.Item>
+                    );
+                  })
+                  .reverse()}
+              </ListGroup>
+            </Offcanvas.Body>
+          </Offcanvas>
         </>
       )}
 

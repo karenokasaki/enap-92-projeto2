@@ -16,9 +16,10 @@ function ModalCreateUser({ reload, setReload }) {
     stack: [],
     active: true,
     task: "",
-    progresso: "",
+    progresso: "0",
     foto: "",
     cargo: "",
+    tasksFinalizadas: [],
   });
 
   const handleClose = () => setShow(false);
@@ -34,7 +35,6 @@ function ModalCreateUser({ reload, setReload }) {
       await axios.post("https://ironrest.herokuapp.com/enap92", form);
       handleClose(); // fechar o modal
       setForm({
-        //limpar o meu formulário
         nome: "",
         salario: "",
         email: "",
@@ -48,6 +48,7 @@ function ModalCreateUser({ reload, setReload }) {
         progresso: "",
         foto: "",
         cargo: "",
+        tasksFinalizadas: [],
       });
       toast.success("Funcionário criado com sucesso! :D");
       setReload(!reload);
