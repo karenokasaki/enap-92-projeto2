@@ -15,6 +15,7 @@ function HomePage() {
     }
 
     fetchUsers();
+    console.log("Dentro do useEffect da home!!");
   }, [reload]);
 
   console.log(users);
