@@ -30,10 +30,10 @@ function HomePage() {
     setSearch(e.target.value);
   }
 
-
   return (
     <div>
       <Container>
+        <h1>teste</h1>
         <FloatingLabel
           controlId="floatingInput"
           label="Pesquise por nome / departamento / cargo"
