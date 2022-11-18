@@ -41,7 +41,6 @@ function DetailPage() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [reload, setReload] = useState(false);
-
   const [showTasks, setShowTasks] = useState(false);
 
   useEffect(() => {
@@ -59,7 +58,11 @@ function DetailPage() {
       }
     }
     fetchUser();
-  }, [reload]);
+
+    return () => {
+      console.log("vai rodar depois do useEffect");
+    };
+  }, [reload, userID]);
 
   function handleChange(e) {
     if (e.target.name === "active") {
@@ -150,6 +153,21 @@ function DetailPage() {
     } catch (error) {
       console.log(error);
       toast.error("Algo deu errado. Tente novamente.");
+    }
+  }
+
+  async function handleDeleteTask(index) {
+    try {
+      const clone = { ...user };
+      delete clone._id;
+
+      clone.tasksFinalizadas.splice(index, 1);
+
+      await axios.put(`https://ironrest.herokuapp.com/enap92/${userID}`, clone);
+      setReload(!reload);
+    } catch (error) {
+      console.log(error);
+      toast.error("Task não foi excluída");
     }
   }
 
@@ -435,6 +453,7 @@ function DetailPage() {
                         Concluir Task
                       </Button>
                     </Col>
+
                     <Col>
                       <Button
                         variant="outline-dark"
@@ -463,10 +482,17 @@ function DetailPage() {
             <Offcanvas.Body>
               <ListGroup>
                 {user.tasksFinalizadas
-                  .map((task) => {
+                  .map((task, index) => {
                     return (
                       <ListGroup.Item>
-                        <Button variant="danger">x</Button> {task}
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          onClick={() => handleDeleteTask(index)}
+                        >
+                          x
+                        </Button>{" "}
+                        {task}
                       </ListGroup.Item>
                     );
                   })

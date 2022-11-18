@@ -1,4 +1,11 @@
-import { Table, Container, Button, ProgressBar } from "react-bootstrap";
+import {
+  Table,
+  Container,
+  Button,
+  ProgressBar,
+  FloatingLabel,
+  Form,
+} from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ModalCreateUser from "../components/ModalCreateUser";
@@ -7,6 +14,7 @@ import { Link } from "react-router-dom";
 function HomePage() {
   const [users, setUsers] = useState([]);
   const [reload, setReload] = useState(false);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     async function fetchUsers() {
@@ -18,13 +26,27 @@ function HomePage() {
     console.log("Dentro do useEffect da home!!");
   }, [reload]);
 
-  console.log(users);
+  function handleSearch(e) {
+    setSearch(e.target.value);
+  }
+
+
   return (
     <div>
-      <h1>Homepage</h1>
-      <p>Aqui existirá uma tabela com as informações dos funcionários</p>
-
       <Container>
+        <FloatingLabel
+          controlId="floatingInput"
+          label="Pesquise por nome / departamento / cargo"
+          className="my-3"
+        >
+          <Form.Control
+            type="text"
+            placeholder="pesquise"
+            value={search}
+            onChange={handleSearch}
+          />
+        </FloatingLabel>
+
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -37,30 +59,40 @@ function HomePage() {
             </tr>
           </thead>
           <tbody>
-            {users.map((user) => {
-              return (
-                <tr key={user._id}>
-                  <td>{user.nome}</td>
-                  <td>{user.task}</td>
-                  <td>
-                    <ProgressBar
-                      animated
-                      now={user.progresso}
-                      label={`${user.progresso}%`}
-                    />
-                  </td>
-                  <td>{user.status}</td>
-                  <td>{user.departamento}</td>
-                  <td>
-                    <Link to={`/user/${user._id}`}>
-                      <Button variant="outline-secondary" size="sm">
-                        Detalhes
-                      </Button>
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
+            {users
+              .filter((user) => {
+                return (
+                  user.nome.toLowerCase().includes(search.toLowerCase()) ||
+                  user.departamento
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                  user.cargo.toLowerCase().includes(search.toLowerCase())
+                );
+              })
+              .map((user) => {
+                return (
+                  <tr key={user._id}>
+                    <td>{user.nome}</td>
+                    <td>{user.task}</td>
+                    <td>
+                      <ProgressBar
+                        animated
+                        now={user.progresso}
+                        label={`${user.progresso}%`}
+                      />
+                    </td>
+                    <td>{user.status}</td>
+                    <td>{user.departamento}</td>
+                    <td>
+                      <Link to={`/user/${user._id}`}>
+                        <Button variant="outline-secondary" size="sm">
+                          Detalhes
+                        </Button>
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </Table>
 
